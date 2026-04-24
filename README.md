@@ -1,87 +1,20 @@
-API CONTRACTS — Sprint 1
 
-Base URL:
-http://localhost:8080/api
+--------------------------------------------------------------------
 
-AUTH
+Task to Database team (Joy and Lemuel):
 
-POST /auth/register
-Request:
-{
-"fullName": "string",
-"email": "string",
-"password": "string",
-"role": "STUDENT | INSTRUCTOR | ADMIN"
-}
+- Write a proper read me file describing the project, folder structure and future of project before the end of Sprint 1!!
+- Keep on updating this README.md file after every push to the dev branch
 
-Response:
-201 { "message": "User registered successfully" }
-400 { "error": "Email already exists" }
+---------------------------------------------------------------------
 
----------------------------------------------------
+Important Note to everyone:
 
-POST /auth/login
-Request:
-{
-"email": "string",
-"password": "string"
-}
-
-Response:
-200 {
-"token": "jwt",
-"role": "STUDENT | INSTRUCTOR | ADMIN",
-"userId": number
-}
-
-401 { "error": "Invalid credentials" }
-403 { "error": "Account pending admin approval" }
-
----------------------------------------------------
-
-COURSES
-
-GET /courses
-Headers: Authorization: Bearer <token>
-
-Response:
-200 [
-{
-"id": number,
-"title": "string",
-"description": "string",
-"instructorName": "string",
-"imageUrl": "string"
-}
-]
-
-401 Unauthorized
-
----------------------------------------------------
-
-ENROLLMENTS
-
-POST /enrollments
-Headers: Authorization: Bearer <token>
-
-Request:
-{
-"courseId": number
-}
-
-Response:
-201 { "message": "Enrolled successfully" }
-409 { "error": "Already enrolled" }
-
----------------------------------------------------
-
-DELETE /enrollments/{courseId}
-Response:
-200 { "message": "Dropped successfully" }
-400 { "error": "Not enrolled" }
-
----------------------------------------------------
-
-GET /enrollments/status/{courseId}
-Response:
-200 { "enrolled": true }Commit it:
+- Notice the issues in Project serve as our SCRUM.
+- Read the API contract!!
+- Document your work and send in either a markdown file or text file on the app discord/whatsapp.
+- When working on any new feature or specific task, never work directly in production (main), development (dev) or I will just laugh at your pull request.
+- If you are using AI make sure to use the reference documents.
+- If you are not in my class or/and you want to contribute then check my other projects like: https://github.com/osvald-27/ties
+- Secrets arenot hardcoded into backend or frontend logic
+- Most importantly .env files are not pushed to github, go to your .gitignore file and put any dependecies or secrets, please!! All secrets are shared inour discord channel or whatsapp group.
