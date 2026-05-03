@@ -16,5 +16,5 @@ Important Note to everyone:
 - When working on any new feature or specific task, never work directly in production (main), development (dev) or I will just laugh at your pull request.
 - If you are using AI make sure to use the reference documents.
 - If you are not in my class or/and you want to contribute then check my other projects like: https://github.com/osvald-27/ties
-- Secrets arenot hardcoded into backend or frontend logic
+- Secrets are not hardcoded into backend or frontend logic
 - Most importantly .env files are not pushed to github, go to your .gitignore file and put any dependecies or secrets, please!! All secrets are shared inour discord channel or whatsapp group.
