@@ -1,0 +1,54 @@
+______________________________________________________________________________________________________________________________________________________
+
+BACKEND DOCUMENTATION
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DTOs (Data Transfer Objects)
+------------------------------------------------------------------------------------------------------------------------------------------------------
+In order to completely decouple the system, We make use of DTOs.
+
+These DTOs are plain classes with fields, getters and setters. DTOs are concrete classes with no methods and are built to avoid returning important objects directly in to the frontend, serving as a gateway package. DTOs are NOT APIs. Requests and responds are packaged into DTOs with specific data types and are processed by services on the other end.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Frontend --> API call --> Backend Service --> API --> Packaged with in a DTO --> Frontend
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+- DTOs used in Sprint one:
+
+	RegisterRequest --ships the full name, email, password and role.
+	LoginRequest --ships the same thing as a register request.
+	ApiResponse --success is a reply to a register request.
+	LoginResponse --sends back a token, role and userId.
+
+- DTOs used in Sprint two:
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Entity
+------------------------------------------------------------------------------------------------------------------------------------------------------
+They represent real-world objects, usually used to represent actors as they are already a known set of actors. In Sprint one, and through out the project this is implemented with enum which is NOT a class or interface but a fixed field of possible values. A user can either be a student, teacher or an admin. The role entity is not a class is because it doesn't have any properties or behaviours, just a label. 
+
+Before adding databases, annotations and other bollocks, the User would have been a concrete class with an id, fullName, email, passwardHash, role and an approved property. But since a real user can never must have a role, this makes it an abstract class.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+- Entities used in Sprint One:
+	Role --An Enum specifying the role of a user: either student, instructor or admin
+	User --An abstract class specifying the content of any user
+	
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Service
+------------------------------------------------------------------------------------------------------------------------------------------------------
+This is the business logic, basically all the different services we offer. When we use services we use them as Spring beans that is only one instance is created every time we start our application. Since the AuthService may change from a local implementation to a more production standard like OAuth we use an interface, applying the principles of SOLID ({Dependency Inversion principle}).
+------------------------------------------------------------------------------------------------------------------------------------------------------
+-Services used in Sprint One:
+	AuthService --An interface with abstract login and register methods and LoginRequest and RegisterRequest as imput types, respectively.
+	AuthServiceImplementation -- a concrete class implementing AuthService, has only one instance when compiled.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Controller
+------------------------------------------------------------------------------------------------------------------------------------------------------
+This is the entry point of the application, receiving HTTP requests and returning HTTP responses, automatically returning data serialised as JSON automatically. Every endpoint in this controller must have domain /api/auth. Controller should enable Cross-Origin Resource Sharing from the frontend.
+______________________________________________________________________________________________________________________________________________________
+
