@@ -1,8 +1,0 @@
-INSERT INTO users (email, password_hash, role, is_approved)
-VALUES
-('admin@elearning.com', 'hash123', 'ADMIN', TRUE),
-('teacher_joy@elearning.com', 'hash789', 'TEACHER', TRUE),
- ('student_test@elearning.com', 'hash456', 'STUDENT', FALSE);
- 
-INSERT INTO course (course_title, course_description, instructor_id, status)
-VALUES('Database Basics', 'Learning PostgreSQL for FET students. ', 11, 'Active');
