@@ -1,0 +1,2 @@
+"id","full_name","email","password_hash","role","approved","created_at"
+1,"Admin_User","oswaldkarisma27@gmail.com","$2a$10$VVHgQb0p8dYVhKPZ48yqMuK5V1rXwT.c8Y4.J4.Cxq5X8yP7kqIf2","ADMIN",True,"2026-05-08 23:24:16.435554"
