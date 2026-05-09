@@ -1,0 +1,16 @@
+ CREATE TABLE course (
+    course_id SERIAL PRIMARY KEY,
+	course_title VARCHAR(225) UNIQUE NOT NULL,
+	course_description TEXT NOT NULL,
+	instructor_id INT REFERENCES users(id) ON DELETE SET NULL,
+	status VARCHAR(20),
+	created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+	email VARCHAR(225) UNIQUE NOT NULL,
+	password_hash TEXT NOT NULL,
+	role VARCHAR(20) NOT NULL DEFAULT 'STUDENT'
+	is_approved BOOLEAN NOT NULL DEFAULT FALSE,
+	created_at TIMESTAMP DEFAULT NOW()
+);
