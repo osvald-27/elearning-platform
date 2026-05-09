@@ -39,20 +39,11 @@ public class AuthService {
             throw new EmailAlreadyExistsException("Email already exists");
         }
 
-        Role role;
-        try {
-            role = Role.valueOf(request.getRole().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new InvalidCredentialsException("Invalid role");
-        }
-
-        User user;
-        switch (role) {
-            case STUDENT -> user = new Student();
-            case INSTRUCTOR -> user = new Instructor();
-            case ADMIN -> user = new Admin();
-            default -> throw new InvalidCredentialsException("Invalid role");
-        }
+        User user = switch (request.getRole()) {
+            case STUDENT    -> new Student();
+            case INSTRUCTOR -> new Instructor();
+            case ADMIN      -> new Admin();
+        };
 
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
@@ -60,7 +51,11 @@ public class AuthService {
 
         userRepository.save(user);
 
-        return new MessageResponse("User registered successfully");
+        String message = (request.getRole() == Role.STUDENT)
+            ? "Account created successfully. You can now log in."
+            : "Account created. Your account is pending admin approval.";
+
+        return new MessageResponse(message);
     }
 
     public LoginResponse login(LoginRequest request) {
