@@ -44,7 +44,7 @@ public class AuthService {
             case INSTRUCTOR -> new Instructor();
             case ADMIN      -> new Admin();
         };
-
+        
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
