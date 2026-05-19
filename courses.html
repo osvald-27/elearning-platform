@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fold - Courses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Carter+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeSidebar" aria-label="Close menu">✕</button>
+    <nav class="sidebar-nav">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </aside>
+
+  <button class="menu-btn" id="openSidebar" aria-label="Open menu">☰</button>
+
+  <main class="page inner-page">
+    
+
+    <header class="site-header">
+      <a href="index.html" class="logo-link">
+        <img src="./img/logo.png" alt="Fold logo" class="site-logo" />
+      </a>
+    </header>
+
+    <section class="page-hero compact">
+      <div>
+        <h1 class="page-title">Courses</h1>
+        <p class="section-text">Choose a learning path that matches your goals.</p>
+      </div>
+
+    </section>
+
+    <section class="card-grid">
+      <article class="course-card">
+        <img src="./img/book.svg" alt="Course icon" class="card-icon" />
+        <h2>Frontend Basics</h2>
+        <p>HTML, CSS, and JavaScript foundations for beginners.</p>
+        <a href="course-info.html" class="primary-btn">View Course</a>
+      </article>
+
+      <article class="course-card">
+        <img src="./img/pencil.svg" alt="Course icon" class="card-icon" />
+        <h2>UI Design Essentials</h2>
+        <p>Learn layout, typography, spacing, and interface design basics.</p>
+        <a href="course-info.html" class="primary-btn">View Course</a>
+      </article>
+
+      <article class="course-card">
+        <img src="./img/briefcase.svg" alt="Course icon" class="card-icon" />
+        <h2>Career Readiness</h2>
+        <p>Portfolio building, project practice, and interview preparation.</p>
+        <a href="course-info.html" class="primary-btn">View Course</a>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

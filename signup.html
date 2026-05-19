@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fold - Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Carter+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeSidebar" aria-label="Close menu">✕</button>
+    <nav class="sidebar-nav">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </aside>
+
+  <button class="menu-btn" id="openSidebar" aria-label="Open menu">☰</button>
+
+  <main class="page inner-page">
+    
+
+    <header class="site-header">
+      <a href="index.html" class="logo-link">
+        <img src="./img/logo.png" alt="Fold logo" class="site-logo" />
+      </a>
+    </header>
+
+    <section class="form-section">
+      <div class="form-card">
+        <h1 class="page-title small">Sign Up</h1>
+        <form class="site-form">
+          <label>
+            <span>Full Name</span>
+            <input type="text" placeholder="Enter your name" />
+          </label>
+
+          <label>
+            <span>Email</span>
+            <input type="email" placeholder="Enter your email" />
+          </label>
+
+          <label>
+            <span>Password</span>
+            <input type="password" placeholder="Create a password" />
+          </label>
+
+          <label>
+            <span>Confirm Password</span>
+            <input type="password" placeholder="Confirm password" />
+          </label>
+
+          <button type="submit" class="primary-btn full">Create Account</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

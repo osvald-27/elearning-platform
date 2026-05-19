@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fold - Course Info</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Carter+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeSidebar" aria-label="Close menu">✕</button>
+    <nav class="sidebar-nav">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </aside>
+
+  <button class="menu-btn" id="openSidebar" aria-label="Open menu">☰</button>
+
+  <main class="page inner-page">
+    
+
+    <header class="site-header">
+      <a href="index.html" class="logo-link">
+        <img src="./img/logo.png" alt="Fold logo" class="site-logo" />
+      </a>
+    </header>
+
+    <section class="course-info-layout">
+      <div class="course-info-main">
+        <h1 class="page-title">Frontend Basics</h1>
+        <p class="section-text">
+          Learn the foundations of modern web development with HTML, CSS, and JavaScript.
+        </p>
+
+        <div class="info-box">
+          <h3>What you'll learn</h3>
+          <ul>
+            <li>Semantic HTML structure</li>
+            <li>Responsive CSS layouts</li>
+            <li>JavaScript basics</li>
+            <li>Building small real-world pages</li>
+          </ul>
+        </div>
+
+        <div class="hero-actions">
+          <a href="signup.html" class="primary-btn">Enroll Now</a>
+        </div>
+      </div>
+
+      <aside class="course-info-side">
+        <div class="info-card">
+          <img src="./img/book.svg" alt="Book illustration" class="card-icon large" />
+          <p><strong>Duration:</strong> 6 weeks</p>
+          <p><strong>Level:</strong> Beginner</p>
+          <p><strong>Format:</strong> Self-paced</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fold - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Carter+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeSidebar" aria-label="Close menu">✕</button>
+    <nav class="sidebar-nav">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </aside>
+
+  <button class="menu-btn" id="openSidebar" aria-label="Open menu">☰</button>
+
+  <main class="page hero-page">
+    
+
+    <header class="site-header">
+      <a href="index.html" class="logo-link">
+        <img src="./img/logo.png" alt="Fold logo" class="site-logo" />
+      </a>
+    </header>
+
+    <section class="home-slider">
+      <article class="home-slide active" id="home1">
+        <h1 class="hero-title hero-title-center">Welcome To</h1>
+
+        <div class="hero-logo-large">
+          <img src="./img/logo.png" alt="Fold logo" class="hero-logo-img" />
+        </div>
+
+        <p class="hero-subtitle">Where Knowledge Unfolds</p>
+
+        <div class="hero-actions center">
+          <button class="primary-btn" data-next="home2">Next</button>
+        </div>
+      </article>
+
+      <article class="home-slide" id="home2">
+        <div class="hero-grid">
+          <div class="hero-visual circle-visual">
+            <div class="visual-circle">
+              <img src="./img/book.svg" alt="Book illustration" class="visual-svg large-svg" />
+            </div>
+          </div>
+
+          <div class="hero-content">
+            <h2 class="hero-title">
+              <span class="text-dark">Learn</span
+              <span class="text-light"> From Home</span>
+            </h2>
+
+            <div class="hero-actions">
+              <a href="presignup.html" class="primary-btn large-btn">Sign Up</a>
+              <button class="secondary-btn" data-next="home3">Next</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="home-slide" id="home3">
+        <div class="hero-grid reverse">
+          <div class="hero-content">
+            <h2 class="hero-title">
+              <span class="text-dark">Build</span>
+              <span class="text-light"> Your Future</span>
+            </h2>
+            <p class="section-text">
+              Explore practical learning paths, guided lessons, and curated resources
+              designed to help you grow from anywhere.
+            </p>
+            <div class="hero-actions">
+              <a href="courses.html" class="primary-btn">Browse Courses</a>
+              <a href="about.html" class="secondary-link-btn">Learn More</a>
+            </div>
+          </div>
+
+          <div class="hero-visual circle-visual">
+            <div class="visual-circle">
+              <img src="./img/pencil.svg" alt="Pencil illustration" class="visual-svg" />
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
