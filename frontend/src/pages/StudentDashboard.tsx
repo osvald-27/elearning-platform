@@ -4,11 +4,11 @@ import { useAuth } from '../context/AuthContext';
 import { courseService, enrollmentService } from '../services/api';
 import type { CourseResponse, EnrollmentResponse } from '../types';
 import { AxiosError } from 'axios';
+import Sidebar from '../components/Sidebar';
 
 export default function StudentDashboard() {
   const { fullName, logout } = useAuth();
   const navigate = useNavigate();
-
   const [courses,     setCourses]     = useState<CourseResponse[]>([]);
   const [enrollments, setEnrollments] = useState<EnrollmentResponse[]>([]);
   const [search,      setSearch]      = useState('');
@@ -16,116 +16,84 @@ export default function StudentDashboard() {
   const [error,       setError]       = useState('');
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const [coursesRes, enrollRes] = await Promise.all([
-          courseService.getAll(),
-          enrollmentService.getMyCourses(),
-        ]);
-        setCourses(coursesRes.data);
-        setEnrollments(enrollRes.data);
-      } catch (err) {
-        const e = err as AxiosError<{ error?: string }>;
-        setError(e.response?.data?.error ?? 'Failed to load courses');
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
+    Promise.all([courseService.getAll(), enrollmentService.getMyCourses()])
+      .then(([cr, er]) => { setCourses(cr.data); setEnrollments(er.data); })
+      .catch((e: AxiosError<{error?:string}>) => setError(e.response?.data?.error ?? 'Failed to load'))
+      .finally(() => setLoading(false));
   }, []);
 
   const enrolledIds = new Set(enrollments.map(e => e.courseId));
-
   const filtered = courses.filter(c =>
     c.title.toLowerCase().includes(search.toLowerCase()) ||
     c.instructorName.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div style={s.page}>
-      {/* Header */}
-      <div style={s.header}>
+    <main className="page inner-page" style={{ paddingTop: 0 }}>
+      <Sidebar />
+      <div className="dashboard-header">
         <div>
-          <h1 style={s.heading}>UB E-Learning</h1>
-          <p style={s.sub}>Welcome back, {fullName} 👋</p>
+          <h1 className="dashboard-heading">My Learning</h1>
+          <p className="dashboard-sub">Welcome back, {fullName} 👋</p>
         </div>
-        <button style={s.logoutBtn} onClick={logout}>Log Out</button>
+        <button className="secondary-btn btn-sm"
+          style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }} onClick={logout}>Log Out</button>
       </div>
 
-      {/* Search */}
-      <div style={s.searchWrap}>
-        <input
-          style={s.search}
-          placeholder="Search courses or instructors..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-      </div>
-
-      {/* States */}
-      {loading && <p style={s.center}>Loading courses...</p>}
-      {error   && <div style={s.errorBox}>{error}</div>}
-
-      {/* Grid */}
-      {!loading && !error && (
-        <>
-          <p style={s.count}>{filtered.length} course{filtered.length !== 1 ? 's' : ''} available</p>
-          <div style={s.grid}>
-            {filtered.map(course => (
-              <div key={course.id} style={s.card} onClick={() => navigate(`/courses/${course.id}`)}>
-                {/* Image */}
-                <div style={s.imgWrap}>
-                  {course.imageUrl
-                    ? <img src={course.imageUrl} alt={course.title} style={s.img} />
-                    : <div style={s.imgPlaceholder}>📚</div>
-                  }
-                  {enrolledIds.has(course.id) && (
-                    <span style={s.badge}>✓ Enrolled</span>
-                  )}
+      {enrollments.length > 0 && (
+        <div style={{ maxWidth: 'var(--max-width)', margin: '24px auto 0' }}>
+          <h2 style={{ fontFamily: "'Carter One', cursive", margin: '0 0 12px', fontSize: 22 }}>My Courses</h2>
+          <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 6 }}>
+            {enrollments.map(e => (
+              <div key={e.enrollmentId} onClick={() => navigate(`/courses/${e.courseId}`)}
+                style={{ minWidth: 190, background: '#fff', borderRadius: 20, padding: 16,
+                  boxShadow: 'var(--card-shadow)', cursor: 'pointer', flexShrink: 0 }}>
+                <div style={{ fontSize: 28, marginBottom: 8 }}>📖</div>
+                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 3 }}>{e.courseTitle}</div>
+                <div style={{ fontSize: 11, color: 'var(--gray)' }}>{e.instructorName}</div>
+                <div style={{ marginTop: 10, height: 4, background: '#e0e0e0', borderRadius: 2 }}>
+                  <div style={{ width: `${e.progressPercent}%`, height: '100%', background: 'var(--green)', borderRadius: 2 }} />
                 </div>
-                {/* Info */}
-                <div style={s.cardBody}>
-                  <h3 style={s.cardTitle}>{course.title}</h3>
-                  <p style={s.cardInstructor}>{course.instructorName}</p>
-                  <p style={s.cardDesc}>
-                    {course.description
-                      ? course.description.substring(0, 80) + (course.description.length > 80 ? '...' : '')
-                      : 'No description available'}
-                  </p>
-                  <button style={s.viewBtn}>View Course →</button>
-                </div>
+                <div style={{ fontSize: 11, color: 'var(--gray)', marginTop: 3 }}>{e.progressPercent}% complete</div>
               </div>
             ))}
-            {filtered.length === 0 && (
-              <p style={s.center}>No courses match your search.</p>
-            )}
           </div>
-        </>
+        </div>
       )}
-    </div>
+
+      <div className="search-bar"><input placeholder="Search courses or instructors..."
+        value={search} onChange={e => setSearch(e.target.value)} /></div>
+
+      <div style={{ maxWidth: 'var(--max-width)', margin: '16px auto 0' }}>
+        <h2 style={{ fontFamily: "'Carter One', cursive", margin: 0, fontSize: 22 }}>
+          All Courses <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, fontWeight: 400, color: 'var(--gray)' }}>({filtered.length})</span>
+        </h2>
+      </div>
+
+      {loading && <div className="loading-wrap"><div className="loading-spinner" /><span>Loading...</span></div>}
+      {error   && <div style={{ maxWidth: 'var(--max-width)', margin: '14px auto' }}><div className="alert alert-error">{error}</div></div>}
+
+      {!loading && !error && (
+        <section className="card-grid">
+          {filtered.length === 0
+            ? <div className="empty-wrap" style={{ gridColumn: '1/-1' }}>No courses match your search.</div>
+            : filtered.map(course => (
+              <article key={course.id} className="course-card" onClick={() => navigate(`/courses/${course.id}`)}>
+                <div className="card-img-wrap" style={{ position: 'relative' }}>
+                  {course.imageUrl ? <img src={course.imageUrl} alt={course.title} />
+                    : <span className="card-img-placeholder">📚</span>}
+                  {enrolledIds.has(course.id) && (
+                    <span className="badge badge-green" style={{ position: 'absolute', top: 8, right: 8 }}>✓ Enrolled</span>
+                  )}
+                </div>
+                <h2>{course.title}</h2>
+                <p style={{ fontSize: 12, color: 'var(--gray)', margin: '0 0 2px' }}>{course.instructorName}</p>
+                <p>{(course.description ?? '').substring(0, 80)}{(course.description?.length ?? 0) > 80 ? '...' : ''}</p>
+                <button className="primary-btn btn-sm" style={{ alignSelf: 'flex-start' }}>View Course</button>
+              </article>
+            ))}
+        </section>
+      )}
+    </main>
   );
 }
-
-const s: Record<string, React.CSSProperties> = {
-  page:          { minHeight: '100vh', backgroundColor: '#f0f2f5', padding: '0 0 3rem' },
-  header:        { backgroundColor: '#1a1a2e', color: '#fff', padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-  heading:       { margin: 0, fontSize: '1.4rem', fontWeight: 700 },
-  sub:           { margin: '0.2rem 0 0', fontSize: '0.875rem', opacity: 0.8 },
-  logoutBtn:     { background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '0.4rem 1rem', borderRadius: '5px', cursor: 'pointer', fontWeight: 600 },
-  searchWrap:    { padding: '1.5rem 2rem 0' },
-  search:        { width: '100%', maxWidth: '480px', padding: '0.65rem 1rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '0.95rem', boxSizing: 'border-box' },
-  count:         { padding: '0.75rem 2rem 0', color: '#666', fontSize: '0.875rem' },
-  grid:          { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem', padding: '1rem 2rem 0' },
-  card:          { background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', cursor: 'pointer', overflow: 'hidden', transition: 'transform 0.15s', display: 'flex', flexDirection: 'column' },
-  imgWrap:       { position: 'relative', height: '160px', overflow: 'hidden', backgroundColor: '#e8e8e8' },
-  img:           { width: '100%', height: '100%', objectFit: 'cover' },
-  imgPlaceholder:{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' },
-  badge:         { position: 'absolute', top: '0.5rem', right: '0.5rem', background: '#27ae60', color: '#fff', fontSize: '0.75rem', fontWeight: 700, padding: '0.2rem 0.6rem', borderRadius: '20px' },
-  cardBody:      { padding: '1rem', flex: 1, display: 'flex', flexDirection: 'column' },
-  cardTitle:     { margin: '0 0 0.25rem', fontSize: '1rem', fontWeight: 700, color: '#1a1a2e' },
-  cardInstructor:{ margin: '0 0 0.5rem', fontSize: '0.8rem', color: '#666' },
-  cardDesc:      { margin: '0 0 0.75rem', fontSize: '0.85rem', color: '#555', flex: 1 },
-  viewBtn:       { background: '#1a1a2e', color: '#fff', border: 'none', padding: '0.45rem 0.9rem', borderRadius: '5px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, alignSelf: 'flex-start' },
-  errorBox:      { margin: '1rem 2rem', background: '#fdecea', border: '1px solid #e57373', borderRadius: '5px', padding: '0.75rem', color: '#c0392b' },
-  center:        { textAlign: 'center', color: '#888', marginTop: '2rem', gridColumn: '1/-1' },
-};
