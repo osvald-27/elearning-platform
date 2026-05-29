@@ -57,3 +57,12 @@ export interface EnrollmentStatusResponse {
   status: 'ACTIVE' | 'DROPPED' | null;
   progressPercent: number | null;
 }
+
+export interface UserResponse {
+  id: number;
+  fullName: string;
+  email: string;
+  role: Role;
+  approved: boolean;
+  createdAt: string;
+}
