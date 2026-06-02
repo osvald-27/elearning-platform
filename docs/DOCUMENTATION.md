@@ -24,7 +24,7 @@
 
 Fold is a web-based e-learning platform built for the University of Buea as part of CEF331. It allows students to discover and enroll in courses, instructors to create and manage course content, and administrators to approve accounts and monitor platform activity.
 
-The name "Fold" reflects the concept of knowledge unfolding through structured learning.
+The name "Fold" stands for something that Von put, i don't fes remember
 
 **Three user roles:**
 - **Student** — discovers courses, enrolls, attends materials
@@ -40,7 +40,7 @@ The name "Fold" reflects the concept of knowledge unfolding through structured l
 | Backend | Java 25 + Spring Boot 4.0.6 |
 | Security | Spring Security 6 + JJWT 0.12.6 + BCrypt |
 | Persistence | Spring Data JPA + Hibernate + HikariCP |
-| Database | PostgreSQL 14+ |
+| Database | PostgreSQL 18 |
 | Frontend | React 18 + TypeScript 5 + Vite 5 |
 | HTTP Client | Axios 1.6 |
 | Routing | React Router 6 |
@@ -54,8 +54,8 @@ The name "Fold" reflects the concept of knowledge unfolding through structured l
 
 - Java 25 JDK
 - Apache Maven 3.9+
-- PostgreSQL 14+ (running on port 5432)
-- Node.js 18+ and npm
+- PostgreSQL 18 (running on port 5432)
+- Node.js 24+ and npm 11+
 
 ### Database Setup
 
@@ -218,14 +218,14 @@ Controllers receive HTTP, delegate to services, return ResponseEntity. Services 
 
 ```
 HTTP Request
-  → JwtFilter (validate Bearer token, set SecurityContext)
-  → SecurityConfig (URL-level authorization: /api/auth/** permitAll)
-  → @PreAuthorize (method-level role check: STUDENT / INSTRUCTOR / ADMIN)
-  → Controller
-  → Service (resource-level ownership check if needed)
+  -> JwtFilter (validate Bearer token, set SecurityContext)
+  -> SecurityConfig (URL-level authorization: /api/auth/** permitAll)
+  -> @PreAuthorize (method-level role check: STUDENT / INSTRUCTOR / ADMIN)
+  -> Controller
+  -> Service (resource-level ownership check if needed)
 ```
 
-### JWT Structure
+### JWT Structure 
 
 ```json
 {
@@ -248,7 +248,7 @@ Signed with HMAC-SHA256. Expires after 24 hours. The `sub` claim is the user's d
 
 **Soft delete for enrollments** — dropping a course sets `status = DROPPED` and saves the record. The row is never deleted. History is preserved for analytics and audit.
 
-**Unpublished = 404** — attempting to access an unpublished course returns the same 404 as a non-existent course. Students cannot tell whether a course ID exists but is draft vs. genuinely missing.
+**- — attempting to access an unpublished course returns the same 404 as a non-existent course. Students cannot tell whether a course ID exists but is draft vs. genuinely missing.
 
 ---
 
@@ -432,6 +432,9 @@ Common status codes:
 | 409 | Conflict (already enrolled) |
 
 ---
+
+
+
 
 ## 10. OOP and Design Concepts
 

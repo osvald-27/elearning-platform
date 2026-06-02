@@ -18,14 +18,18 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    // GET all pending users (approved=false)
     @GetMapping("/pending-users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Map<String, Object>>> getPendingUsers() {
         return ResponseEntity.ok(adminService.getPendingUsers());
     }
 
-    // PATCH approve a user
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Map<String, Object>>> getAllUsers() {
+        return ResponseEntity.ok(adminService.getAllUsers());
+    }
+
     @PatchMapping("/users/{userId}/approve")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> approveUser(
@@ -34,21 +38,12 @@ public class AdminController {
         return ResponseEntity.ok(adminService.approveUser(userId, adminId));
     }
 
-    // PATCH reject / disable a user
     @PatchMapping("/users/{userId}/reject")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MessageResponse> rejectUser(@PathVariable Long userId) {
         return ResponseEntity.ok(adminService.rejectUser(userId));
     }
 
-    // GET all users (for admin user management table)
-    @GetMapping("/users")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Map<String, Object>>> getAllUsers() {
-        return ResponseEntity.ok(adminService.getAllUsers());
-    }
-
-    // GET platform stats
     @GetMapping("/stats")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Object>> getStats() {

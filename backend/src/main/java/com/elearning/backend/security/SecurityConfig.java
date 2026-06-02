@@ -20,7 +20,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity  // enables @PreAuthorize on controller methods
+@EnableMethodSecurity   // enables @PreAuthorize on controller methods
 public class SecurityConfig {
 
     @Autowired
