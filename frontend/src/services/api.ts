@@ -8,9 +8,7 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
@@ -22,7 +20,7 @@ export const authService = {
     api.post<LoginResponse>('/auth/login', data),
 };
 
-export const courseService = {};
+export const courseService     = {};
 export const enrollmentService = {};
-export const quizService = {};
-export const adminService = {};
+export const quizService       = {};
+export const adminService      = {};

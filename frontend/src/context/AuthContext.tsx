@@ -3,15 +3,15 @@ import type { ReactNode } from 'react';
 import type { AuthState, LoginResponse, Role } from '../types';
 
 interface AuthContextValue extends AuthState {
-  login: (response: LoginResponse) => void;
-  logout: () => void;
+  login:   (response: LoginResponse) => void;
+  logout:  () => void;
   loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [loading, setLoading] = useState(true);
+  const [loading,   setLoading]   = useState(true);
   const [authState, setAuthState] = useState<AuthState>({
     token: null, role: null, userId: null, fullName: null,
   });
@@ -32,7 +32,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('role',     response.role);
     localStorage.setItem('userId',   String(response.userId));
     localStorage.setItem('fullName', response.fullName);
-    setAuthState({ token: response.token, role: response.role, userId: response.userId, fullName: response.fullName });
+    setAuthState({
+      token: response.token, role: response.role,
+      userId: response.userId, fullName: response.fullName,
+    });
   };
 
   const logout = () => {
